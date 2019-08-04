@@ -1,0 +1,28 @@
+
+- hosts: dev
+  tasks:
+    - name: checking status
+      stat:
+        path: /tmp/sample.txt
+      register: output
+
+    - name: delete file
+      file:
+        path: /tmp/sample.txt
+        state: absent
+      when: output.stat.exists == true
+
+    - name: create a file
+      file:
+        path: /tmp//sample.txt
+        state: touch
+
+    - name: copy files
+      copy:
+        src: /home/jenkins/plays/hii
+        dest: /tmp/hii
+
+    - name: copy files to server
+      fetch:
+        src: /tmp/hii
+        dest: /home/jenkins/plays/hii2
